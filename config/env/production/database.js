@@ -1,10 +1,5 @@
-// path: ./config/env/production/database.js
-
-const { parse } = require("pg-connection-string");
 
 module.exports = ({ env }) => {
-  const { host, port, database, user, password } = parse(env("DATABASE_URL"));
-
   return {
     connection: {
       client: 'postgres',
@@ -14,21 +9,9 @@ module.exports = ({ env }) => {
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
-          cipher: env('DATABASE_SSL_CIPHER', undefined),
-          rejectUnauthorized: env.bool(
-            'DATABASE_SSL_REJECT_UNAUTHORIZED',
-            true
-          ),
-        },
-        schema: env('DATABASE_SCHEMA', 'public'),
+        ssl: env.bool('DATABASE_SSL', false)
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 0), max: env.int('DATABASE_POOL_MAX', 5) },
-      debug: false,
     },
   }
 };
